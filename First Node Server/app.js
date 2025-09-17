@@ -5,6 +5,7 @@ const http = require("http");
 // }
 const server = http.createServer((req, res) => {
   console.log(req);
+  process.exit(); // Exit after logging the request
 });
 
 const PORT = 3000;
