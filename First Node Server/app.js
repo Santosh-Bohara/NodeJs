@@ -1,10 +1,9 @@
-const http = require("http");
 const fs = require("fs");
 
 // function requestListener(req, res) {
 //   console.log(req);
 // }
-const server = http.createServer((req, res) => {
+const userRequestHandler = (req, res) => {
   // console.log(req);
   // console.log(req.url, req.method, req.headers);
   console.log(req.url, req.method);
@@ -22,7 +21,7 @@ const server = http.createServer((req, res) => {
     res.write('<input type="radio" id="male" name="gender" value="male"/>');
     res.write('<label for "female">Female</label>');
     res.write('<input type="radio" id="female" name="gender" value="female"/>');
-    res.write("<input type='submit' value='submit'/> <br>");
+    res.write("<input type='submit' value='submit'> <br>");
     res.write("</form>");
 
     res.write("</body>");
@@ -36,10 +35,19 @@ const server = http.createServer((req, res) => {
     });
     req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
-      console.log(parsedBody);
+
+      const params = new URLSearchParams(parsedBody);
+      // const jsonObject = {};
+      // for (const [key, value] of params.entries()) {
+      //   jsonObject[key] = value;
+      // }
+      const jsonObject = Object.fromEntries(params);
+      console.log(jsonObject);
+
+      // console.log(parsedBody);
+      fs.writeFileSync("user.txt", JSON.stringify(jsonObject));
     });
 
-    fs.writeFileSync("user.txt", "sample data");
     res.statusCode = 302;
     res.setHeader("Location", "/");
   }
@@ -49,10 +57,6 @@ const server = http.createServer((req, res) => {
 
     return res.end();
   }
-});
+};
 
-const PORT = 3000;
-
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = userRequestHandler;
