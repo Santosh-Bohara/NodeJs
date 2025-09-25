@@ -7,7 +7,7 @@ const sumRequestHadler = (req, res) => {
     const params = new URLSearchParams(bodyStr);
     const bodyObj = Object.fromEntries(params);
     console.log(bodyObj);
-    const result = +bodyObj.first + +bodyObj.second;
+    const result = Number(bodyObj.first) + Number(bodyObj.second);
     console.log(result);
     res.setHeader("Content-Type", "text/html");
     res.write(`

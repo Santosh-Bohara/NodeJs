@@ -45,7 +45,10 @@ const userRequestHandler = (req, res) => {
       console.log(jsonObject);
 
       // console.log(parsedBody);
-      fs.writeFileSync("user.txt", JSON.stringify(jsonObject));
+      // fs.writeFileSync("user.txt", JSON.stringify(jsonObject));
+      fs.writeFile("user.txt", JSON.stringify(jsonObject), (error) => {
+        console.log(data written);
+      });
     });
 
     res.statusCode = 302;
