@@ -47,14 +47,14 @@ const userRequestHandler = (req, res) => {
       // console.log(parsedBody);
       // fs.writeFileSync("user.txt", JSON.stringify(jsonObject));
       fs.writeFile("user.txt", JSON.stringify(jsonObject), (error) => {
-        console.log(data written);
+        console.log("data written successfully");
+
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
       });
     });
-
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-  }
-  {
+  } else {
     res.setHeader("Content-Type", "text/html");
     res.write("<h1>Chectout our product !</h1>"); // Write response body
 
