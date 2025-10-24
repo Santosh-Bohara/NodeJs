@@ -1,12 +1,12 @@
+const path = require("path");
+
 const express = require("express");
 
 const userRouter = express.Router();
+const rootDir = require("../utils/pathUtil");
 
 userRouter.get("/", (req, res, next) => {
-  res.send(`
-    <h1>Welcome to Airbnb Clone Application</h1>
-    <a href="/add-home">Add Homes</a>
-    `);
+  res.sendFile(path.join(rootDir, "views", "home.html"));
 });
 
 module.exports = userRouter;
