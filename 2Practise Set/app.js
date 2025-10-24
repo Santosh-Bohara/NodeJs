@@ -1,41 +1,30 @@
+const path = require("path");
 const express = require("express");
+
+const rootDir = require("./utils/pathUtil");
+
+const homeRouter = require("./routes/homeRouter");
+const contactRouter = require("./routes/contactRouter");
 
 const app = express();
 
+app.use(express.urlencoded());
+
+app.use(homeRouter);
+app.use(contactRouter);
 app.use((req, res, next) => {
-  console.log("First Dummy middleware", req.url, req.method);
-  next();
+  res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
 });
 
-app.use((req, res, next) => {
-  console.log("Second Dummy middleware", req.url, req.method);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log("First Dummy middleware", req.url, req.method);
+//   next();
+// });
 
-app.get("/", (req, res, next) => {
-  console.log("Get Request for Home Page", req.url, req.method);
-  res.send(`<h1>Welcome to Node and Express Session.</h1>`);
-});
-
-app.get("/contact-us", (req, res, next) => {
-  console.log("Contact Us", req.url, req.method);
-  res.send(`
-    <h1>Please give your details</h1>
-    <form action="/contact-us" method="POST">
-      <input type="text" name="username" placeholder="Enter your Name"><br><br>
-      <input type="email" name="email" placeholder="Enter your Email"><br><br>
-      
-      <input type="submit"><br>
-    </form>
-  `);
-});
-
-app.post("/contact-us", (req, res, next) => {
-  console.log("Contact Us - POST", req.url, req.method);
-  res.send(
-    "<h1>Thanks for submitting your details. We will get back to you soon.</h1>"
-  );
-});
+// app.use((req, res, next) => {
+//   console.log("Second Dummy middleware", req.url, req.method);
+//   next();
+// });
 
 // app.use((req, res, next) => {
 //   console.log("Third Dummy middleware", req.url, req.method);
