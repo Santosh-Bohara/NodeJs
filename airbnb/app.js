@@ -1,5 +1,9 @@
 const express = require("express");
 
+const userRouter = require("./routes/userRouter");
+
+const hostRouter = require("./routes/hostRouter");
+
 const app = express();
 
 app.use((req, res, next) => {
@@ -9,29 +13,14 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded());
 
+app.use(userRouter);
+
+app.use(hostRouter);
+
 app.get("/", (req, res, next) => {
   res.send(`
     <h1>Welcome to Airbnb Clone Application</h1>
     <a href="/add-home">Add Homes</a>
-    `);
-});
-
-app.get("/add-home", (req, res, next) => {
-  res.send(`
-    <h1>Register Your Home</h1>
-    <form action="/add-home" method="POST">
-      <input type="text" name="homeName" placeholder="Enter Home Name"/><br><br>
-      <input type="submit"/><br>
-    </form>
-    `);
-});
-
-app.post("/add-home", (req, res, next) => {
-  console.log("Home Registered:", req.body.homeName);
-  res.send(`
-    <h1>Your Home Registered Successfully</h1>
-    <a href="/">Go to Homes</a>
-  
     `);
 });
 
